@@ -1,0 +1,40 @@
+
+#include <Adafruit_FONA.h>
+#include <SoftwareSerial.h>
+
+#define FONA_RX 3
+#define FONA_TX 4
+#define FONA_RST 5
+
+SoftwareSerial fonaSS = SoftwareSerial(FONA_TX, FONA_RX);
+SoftwareSerial *fonaSerial = &fonaSS;
+Adafruit_FONA fona = Adafruit_FONA(FONA_RST);
+
+void setup() {
+  while (!Serial);
+ Serial.begin(115200);
+  
+  fonaSerial->begin(4800);
+  if (! fona.begin(*fonaSerial)) {
+    Serial.println(F("Couldn't find FONA"));
+    while (1);
+  }
+    Serial.println(F("FONA is OK"));
+
+
+ sendsms();
+}
+
+void loop() {
+  // put your main code here, to run repeatedly:
+
+}
+
+void sendsms()
+{
+
+char sendto[21]="+############";
+char message[141]= "Hello";
+     fona.sendSMS(sendto, message);
+      Serial.println(F("Sent!"));     
+}
