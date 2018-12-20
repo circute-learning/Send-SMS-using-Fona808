@@ -2,6 +2,7 @@
 #include <Adafruit_FONA.h>
 #include <SoftwareSerial.h>
 
+//Adjust the pins depends on your connection
 #define FONA_RX 3
 #define FONA_TX 4
 #define FONA_RST 5
@@ -11,6 +12,7 @@ SoftwareSerial *fonaSerial = &fonaSS;
 Adafruit_FONA fona = Adafruit_FONA(FONA_RST);
 
 void setup() {
+//Start checking the status of FONA 
   while (!Serial);
  Serial.begin(115200);
   
@@ -20,7 +22,7 @@ void setup() {
     while (1);
   }
     Serial.println(F("FONA is OK"));
-
+//End of check
 
  sendsms();
 }
@@ -33,8 +35,8 @@ void loop() {
 void sendsms()
 {
 
-char sendto[21]="+############";
-char message[141]= "Hello";
+char sendto[21]="+############"; //put the Recipient number
+char message[141]= "Hello"; //change the message
      fona.sendSMS(sendto, message);
       Serial.println(F("Sent!"));     
 }
